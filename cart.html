@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,18 +11,15 @@
       color: #fff;
       padding-bottom: 140px;
     }
-
     h2 {
       text-align: center;
       color: gold;
       margin-top: 20px;
     }
-
     .cart-container {
       max-width: 900px;
       margin: 30px auto;
     }
-
     .cart-item {
       display: flex;
       align-items: center;
@@ -33,34 +29,28 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
     .cart-item img {
       width: 80px;
       height: 80px;
       border-radius: 8px;
       margin-left: 15px;
     }
-
     .cart-item-info {
       flex: 1;
     }
-
     .cart-item-info h4 {
       margin: 0 0 10px;
       font-size: 18px;
     }
-
     .cart-item-info p {
       margin: 0 0 8px;
       font-size: 16px;
     }
-
     .qty-controls {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
     .qty-btn {
       background-color: gold;
       color: #000;
@@ -71,13 +61,11 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
     .qty-display {
       min-width: 30px;
       text-align: center;
       font-weight: bold;
     }
-
     .remove-btn {
       background-color: #ff4d4d;
       border: none;
@@ -87,11 +75,9 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     .remove-btn:hover {
       background-color: #e60000;
     }
-
     .total-box {
       text-align: center;
       font-size: 20px;
@@ -101,7 +87,6 @@
       padding: 15px;
       border-radius: 12px;
     }
-
     .checkout-btn {
       display: block;
       margin: 20px auto;
@@ -112,11 +97,9 @@
       border-radius: 10px;
       cursor: pointer;
     }
-
     .checkout-btn:hover {
       background-color: orange;
     }
-
     .footer {
       position: fixed;
       bottom: 0;
@@ -124,13 +107,11 @@
       background-color: #f8f8f8;
       border-top: 2px solid #ccc;
     }
-
     .footer td {
       text-align: center;
       padding: 10px;
       font-size: 14px;
     }
-
     .footer a {
       text-decoration: none;
       color: #333;
@@ -212,24 +193,42 @@
     }
 
     function checkout() {
-  if (cart.length === 0) {
-    alert("🛒 سلتك فارغة!");
-    return;
-  }
+      if (cart.length === 0) {
+        alert("🛒 سلتك فارغة!");
+        return;
+      }
 
-  // حفظ الطلب
-  let orders = JSON.parse(localStorage.getItem("orders")) || [];
-  orders.push({ date: new Date().toLocaleString(), items: cart });
-  localStorage.setItem("orders", JSON.stringify(orders));
+      const client = JSON.parse(localStorage.getItem("client_info")) || {};
+      const name = client.name || "غير معروف";
+      const phone = client.phone || "غير معروف";
 
-  alert("✅ شكراً لطلبك! سيتم التواصل معك قريباً.");
-  cart = [];
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
-}
-    
-    
+      let orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders.push({ date: new Date().toLocaleString(), name, phone, items: cart });
+      localStorage.setItem("orders", JSON.stringify(orders));
+
+      alert("✅ تم تسجيل طلبك، سيتم التواصل معك قريباً!");
+
+      const sendToWhatsApp = confirm("هل تريد إرسال طلبك أيضًا عبر واتساب؟");
+
+      if (sendToWhatsApp) {
+        const message = 
+          `طلب جديد من ${name}%0A` +
+          `📞 رقم الهاتف: ${phone}%0A` +
+          `🛒 المنتجات:%0A` +
+          cart.map(item => `- ${item.name} × ${item.qty || 1}`).join("%0A") +
+          `%0A📦 الإجمالي: ${cart.reduce((sum, item) => sum + item.price * (item.qty || 1), 0)} ريال`;
+
+        const whatsappUrl = `https://wa.me/967772417102?text=${message}`;
+        window.open(whatsappUrl, "_blank");
+      }
+
+      cart = [];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
     renderCart();
   </script>
+
 </body>
 </html>
