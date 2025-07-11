@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -117,6 +118,25 @@
       color: #333;
       font-weight: bold;
     }
+    .account-warning {
+      text-align: center;
+      margin-top: 20px;
+      color: #ffcc00;
+    }
+    .create-account-btn {
+      display: block;
+      margin: 10px auto;
+      background-color: #ffcc00;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .create-account-btn:hover {
+      background-color: #e6b800;
+    }
   </style>
 </head>
 <body>
@@ -133,6 +153,11 @@
 
   <button class="checkout-btn" onclick="checkout()">✅ إتمام الطلب</button>
 
+  <div id="account-warning" class="account-warning" style="display: none;">
+    ⚠️ يجب عليك أولًا إنشاء حساب قبل إتمام الطلب.
+    <button class="create-account-btn" onclick="window.location.href='signup.html'">🔐 إنشاء حساب الآن</button>
+  </div>
+
   <div class="footer">
     <table width="100%">
       <tr align="center">
@@ -148,11 +173,19 @@
   <script>
     const cartContainer = document.getElementById("cart-items");
     const totalPriceEl = document.getElementById("total-price");
+    const warningBox = document.getElementById("account-warning");
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     function renderCart() {
       cartContainer.innerHTML = "";
       let total = 0;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = "<p style='text-align:center;'>🛒 لا توجد منتجات في السلة.</p>";
+        totalPriceEl.textContent = "";
+        return;
+      }
 
       cart.forEach((item, index) => {
         let itemQty = item.qty || 1;
@@ -198,12 +231,15 @@
         return;
       }
 
-      const client = JSON.parse(localStorage.getItem("client_info")) || {};
-      const name = client.name || "غير معروف";
-      const phone = client.phone || "غير معروف";
+      const client = JSON.parse(localStorage.getItem("client_info"));
+
+      if (!client || !client.name || !client.phone) {
+        warningBox.style.display = "block";
+        return;
+      }
 
       let orders = JSON.parse(localStorage.getItem("orders")) || [];
-      orders.push({ date: new Date().toLocaleString(), name, phone, items: cart });
+      orders.push({ date: new Date().toLocaleString(), name: client.name, phone: client.phone, items: cart });
       localStorage.setItem("orders", JSON.stringify(orders));
 
       alert("✅ تم تسجيل طلبك، سيتم التواصل معك قريباً!");
@@ -211,9 +247,9 @@
       const sendToWhatsApp = confirm("هل تريد إرسال طلبك أيضًا عبر واتساب؟");
 
       if (sendToWhatsApp) {
-        const message = 
-          `طلب جديد من ${name}%0A` +
-          `📞 رقم الهاتف: ${phone}%0A` +
+        const message =
+          `طلب جديد من ${client.name}%0A` +
+          `📞 رقم الهاتف: ${client.phone}%0A` +
           `🛒 المنتجات:%0A` +
           cart.map(item => `- ${item.name} × ${item.qty || 1}`).join("%0A") +
           `%0A📦 الإجمالي: ${cart.reduce((sum, item) => sum + item.price * (item.qty || 1), 0)} ريال`;
