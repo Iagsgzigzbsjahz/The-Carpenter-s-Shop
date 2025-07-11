@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>👤 إنشاء حساب</title>
   <style>
     body {
@@ -11,7 +11,6 @@
       color: white;
       padding-bottom: 120px;
     }
-
     .account-box {
       background: rgba(255, 255, 255, 0.1);
       border: 2px solid #ffd700;
@@ -23,13 +22,11 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       color: #ffffff;
     }
-
     .account-box h2 {
       font-size: 26px;
       margin-bottom: 15px;
       color: #ffdd57;
     }
-
     .account-box input {
       display: block;
       margin: 15px auto;
@@ -39,7 +36,6 @@
       border: none;
       font-size: 16px;
     }
-
     .account-box button {
       margin-top: 15px;
       padding: 10px 25px;
@@ -50,11 +46,9 @@
       border-radius: 10px;
       cursor: pointer;
     }
-
     .account-box button:hover {
       background-color: #e6be00;
     }
-
     .footer {
       position: fixed;
       bottom: 0;
@@ -62,13 +56,11 @@
       background-color: #f8f8f8;
       border-top: 2px solid #ccc;
     }
-
     .footer td {
       text-align: center;
       padding: 10px;
       font-size: 14px;
     }
-
     .footer a {
       text-decoration: none;
       color: #333;
@@ -80,8 +72,8 @@
 
   <div class="account-box">
     <h2>👤 إنشاء حساب جديد</h2>
-    <input type="text" id="name" placeholder="ادخل اسمك الكامل">
-    <input type="tel" id="phone" placeholder="ادخل رقم هاتفك">
+    <input type="text" id="name" placeholder="ادخل اسمك الكامل" />
+    <input type="tel" id="phone" placeholder="ادخل رقم هاتفك (مثال: 771234567)" />
     <button onclick="saveAccount()">إنشاء الحساب</button>
     <p id="status" style="margin-top: 15px;"></p>
   </div>
@@ -98,19 +90,55 @@
     </table>
   </div>
 
-  <script>
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase functions from CDN (ES modules)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js";
+
+    // Firebase config - غيّر القيم حسب مشروعك
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFyrDJ8SSDgOVgug8-5jeVkkXzGtGJh4U",
+      authDomain: "al-najjar-net.firebaseapp.com",
+      projectId: "al-najjar-net",
+      storageBucket: "al-najjar-net.appspot.com",
+      messagingSenderId: "134313830995",
+      appId: "1:134313830995:web:7e55fb6a0099f7f8fcb4a6",
+      measurementId: "G-FSMRSQNLRR"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
     function saveAccount() {
       const name = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
+      const status = document.getElementById("status");
 
       if (!name || !phone) {
-        document.getElementById("status").textContent = "يرجى إدخال الاسم ورقم الهاتف.";
+        status.textContent = "❗ يرجى إدخال الاسم ورقم الهاتف.";
+        return;
+      }
+      if (!/^(7\d{8})$/.test(phone)) {
+        status.textContent = "❗ رقم الهاتف غير صحيح. يجب أن يتكون من 9 أرقام ويبدأ بـ7.";
         return;
       }
 
+      // حفظ البيانات في localStorage
       const client = { name, phone };
       localStorage.setItem("client_info", JSON.stringify(client));
-      document.getElementById("status").textContent = "✅ تم إنشاء الحساب بنجاح!";
+
+      // حفظ بيانات الحساب في Firestore داخل مجموعة "clients" بمستند يحمل رقم الهاتف
+      setDoc(doc(db, "clients", phone), client)
+        .then(() => {
+          alert("✅ تم إنشاء الحساب بنجاح!");
+          window.location.href = "cart.html"; // الانتقال للسلة بعد التسجيل
+        })
+        .catch((error) => {
+          console.error("حدث خطأ أثناء حفظ الحساب:", error);
+          status.textContent = "❌ حدث خطأ، حاول مرة أخرى.";
+        });
     }
   </script>
 
