@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إعدادات الحساب</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #fff;
+    }
+
+    .header {
+      padding: 20px;
+      background-color: #1f1f1f;
+      text-align: center;
+    }
+
+    .header img {
+      width: 80px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #ffdd57;
+    }
+
+    .settings-section {
+      padding: 15px;
+    }
+
+    .setting-item {
+      background-color: #1e1e1e;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .setting-item:hover {
+      background-color: #292929;
+    }
+
+    .setting-item span {
+      font-size: 16px;
+    }
+
+    .toggle-darkmode {
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-darkmode input[type="checkbox"] {
+      margin-left: 10px;
+      transform: scale(1.5);
+    }
+
+    .logout {
+      background-color: #b00020;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .logout:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="my.jpg" alt="الصورة الشخصية">
+    <h2>أهلاً بك يا زبون النجار نت</h2>
+  </div>
+
+  <div class="settings-section">
+    <div class="setting-item">
+      <span>تحديث بيانات الحساب</span>
+      <span>📝</span>
+    </div>
+    <div class="setting-item">
+      <span>إدارة الأجهزة</span>
+      <span>📱</span>
+    </div>
+    <div class="setting-item">
+      <span>الخصوصية والأمان</span>
+      <span>🔒</span>
+    </div>
+    <div class="setting-item">
+      <span>الدعم والمساعدة</span>
+      <span>💬</span>
+    </div>
+    <div class="setting-item">
+      <span>شارك تطبيق النجار نت</span>
+      <span>📤</span>
+    </div>
+    <div class="setting-item toggle-darkmode">
+      <label for="modeSwitch">الوضع الفاتح </label>
+      <input type="checkbox" id="modeSwitch" onclick="toggleMode()">
+    </div>
+  </div>
+
+  <div class="logout" onclick="logout()">
+    🔓 تسجيل الخروج
+  </div>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('light-mode');
+    }
+
+    function logout() {
+      alert('تم تسجيل الخروج بنجاح');
+    }
+  </script>
+
+  <style>
+    body.light-mode {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    body.light-mode .setting-item {
+      background-color: #f0f0f0;
+      color: #000000;
+    }
+
+    body.light-mode .setting-item:hover {
+      background-color: #e0e0e0;
+    }
+
+    body.light-mode .logout {
+      background-color: #ff4d4d;
+      color: white;
+    }
+
+    body.light-mode .logout:hover {
+      background-color: #ff0000;
+    }
+  </style>
+</body>
+</html>

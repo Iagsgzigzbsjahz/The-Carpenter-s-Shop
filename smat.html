@@ -1,0 +1,129 @@
+<!DOCTYPE html><html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قسم السماعات البلوتوث</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #1f1c2c, #928dab);
+      color: #fff;
+      padding-bottom: 120px;
+    }
+    .product-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 90%;
+    }
+    .product-box img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .product-box h3 {
+      color: #ffdd57;
+      margin: 10px 0;
+    }
+    .product-box button {
+      margin: 10px 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .add-btn {
+      background-color: #4caf50;
+      color: white;
+    }
+    .details-btn {
+      background-color: #2196f3;
+      color: white;
+    }
+    .fav-btn {
+      background-color: #ff4081;
+      color: white;
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #f8f8f8;
+      border-top: 2px solid #ccc;
+    }
+    .footer td {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+    }
+    .footer a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="product-box">
+      <img src="sma1.jpg" alt="سماعة طوق">
+      <h3>🎧 سماعة بلوتوث طوق رهيبة - 2700 ريال 💎</h3>
+      <button class="add-btn" onclick="addToCart('سماعة طوق', 2700, 'sma1.jpg')">🛒 أضف للسلة</button>
+      <a href="info.html?product=sma1"><button class="details-btn">🔍 عرض التفاصيل</button></a>
+      <button class="fav-btn" onclick="addToFavorites('سماعة طوق', 2700, 'sma1.jpg')">❤️ أضف إلى المفضلة</button>
+    </div><div class="product-box">
+  <img src="sma2.jpg" alt="سماعة الأرنب">
+  <h3>🎧 سماعة بلوتوث طوق (الأرنب) - 2700 ريال 💎</h3>
+  <button class="add-btn" onclick="addToCart('سماعة الأرنب', 2700, 'sma2.jpg')">🛒 أضف للسلة</button>
+  <a href="info.html?product=sma2"><button class="details-btn">🔍 عرض التفاصيل</button></a>
+  <button class="fav-btn" onclick="addToFavorites('سماعة الأرنب', 2700, 'sma2.jpg')">❤️ أضف إلى المفضلة</button>
+</div>
+
+<div class="product-box">
+  <img src="sma3.jpg" alt="سماعة أذن واحدة">
+  <h3>🎧 سماعة بلوتوث أذن واحدة - 1500 ريال 💎</h3>
+  <button class="add-btn" onclick="addToCart('سماعة أذن واحدة', 1500, 'sma3.jpg')">🛒 أضف للسلة</button>
+  <a href="info.html?product=sma3"><button class="details-btn">🔍 عرض التفاصيل</button></a>
+  <button class="fav-btn" onclick="addToFavorites('سماعة أذن واحدة', 1500, 'sma3.jpg')">❤️ أضف إلى المفضلة</button>
+</div>
+
+  </div>  <div class="footer">
+    <table width="100%">
+      <tr align="center">
+        <td><a href="2simpl.html">🏠<br>الرئيسية</a></td>
+        <td><a href="offers.html">📢<br>العروض</a></td>
+        <td><a href="cart.html">🛒<br>السلة</a></td>
+        <td><a href="account.html">👤<br>الحساب</a></td>
+        <td><a href="menu.html">☰<br>القائمة</a></td>
+      </tr>
+    </table>
+  </div>  <script>
+    function addToCart(product, price, image) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let index = cart.findIndex(item => item.name === product);
+      if (index !== -1) {
+        cart[index].qty += 1;
+      } else {
+        cart.push({ name: product, price: price, image: image, qty: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ تمت إضافة المنتج إلى السلة!");
+    }
+
+    function addToFavorites(name, price, image) {
+      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      let exists = favorites.some(item => item.name === name);
+      if (exists) {
+        alert("💡 المنتج موجود بالفعل في المفضلة!");
+        return;
+      }
+      favorites.push({ name, price, image });
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      alert("✅ تمت إضافة المنتج إلى المفضلة!");
+    }
+  </script></body>
+</html>

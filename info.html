@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+  <meta charset="UTF-8">
+  <title>تفاصيل المنتج</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      text-align: center;
+      color: #fff;
+    }.product-container img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.product-container h2 {
+  color: gold;
+  margin: 20px 0 10px;
+}
+
+.product-container p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.action-buttons {
+  margin-top: 30px;
+}
+
+.action-buttons button {
+  margin: 10px;
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-to-cart {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.add-to-cart:hover {
+  background-color: #e6b800;
+}
+
+.back-to-products {
+  background-color: #555;
+  color: #fff;
+}
+
+.back-to-products:hover {
+  background-color: #333;
+}
+
+  </style>
+</head>
+<body>
+  <div class="product-container">
+    <img id="product-image" src="" alt="صورة المنتج">
+    <h2 id="product-name">اسم المنتج</h2>
+    <p id="product-desc">وصف المنتج سيظهر هنا</p>
+    <p id="product-price">💰 السعر: ...</p>
+    <div class="action-buttons">
+      <button class="add-to-cart" onclick="addToCart()">🛒 أضف إلى السلة</button>
+      <a href="2simpl.html"><button class="back-to-products">↩️ العودة للمنتجات</button></a>
+    </div>
+  </div>  <script>
+    const products = {
+      sma1: {
+        name: "سماعة بلوتوث طوق رهيبة",
+        desc: "سماعة ذات جودة عالية واتصال سريع وتقنية عزل الضوضاء.",
+        price: 2700,
+        image: "sma1.jpg"
+      },
+      sma2: {
+        name: "سماعة بلوتوث الأرنب",
+        desc: "تصميم أنيق وجذاب، صوت قوي ومريح في الاستخدام.",
+        price: 2700,
+        image: "sma2.jpg"
+      },
+      sma3: {
+        name: "سماعة بلوتوث أذن واحدة",
+        desc: "صغيرة الحجم، رائعة للتنقل والسفر، بطارية تدوم طويلاً.",
+        price: 1500,
+        image: "sma3.jpg"
+      },
+      mp3_1: {
+        name: "مكبر صوت بلوتوث VIP + مايك",
+        desc: "جودة صوت رائعة، مع مايك للغناء والتسجيل.",
+        price: 7000,
+        image: "mp3-1.jpg"
+      },
+      mp3_2: {
+        name: "مكبر صوت بلوتوث فخامة",
+        desc: "فخامة الصوت في تصميم عملي متنقل.",
+        price: 7000,
+        image: "mp3-2.jpg"
+      },
+      mp3_3: {
+        name: "مكبر صوت VIP",
+        desc: "تصميم جذاب وجودة صوت ممتازة.",
+        price: 3000,
+        image: "mp3-3.jpg"
+      },
+      mp3_5: {
+        name: "مكبر صوت بلوتوث ملكي",
+        desc: "صوت نقي قوي مع تصميم مميز وفاخر.",
+        price: 3500,
+        image: "mp3-5.jpg"
+      }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const productKey = urlParams.get('product');
+
+    if (productKey && products[productKey]) {
+      const product = products[productKey];
+      document.getElementById("product-name").innerText = product.name;
+      document.getElementById("product-desc").innerText = product.desc;
+      document.getElementById("product-price").innerText = `💰 السعر: ${product.price} ريال`;
+      document.getElementById("product-image").src = product.image;
+
+      window.currentProduct = product; // حفظ المنتج في المتغير العالمي
+    } else {
+      document.querySelector(".product-container").innerHTML = "<h2>المنتج غير موجود</h2>";
+    }
+
+    function addToCart() {
+      if (!window.currentProduct) return;
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existing = cart.find(p => p.name === currentProduct.name);
+      if (existing) {
+        existing.qty = (existing.qty || 1) + 1;
+      } else {
+        cart.push({ ...currentProduct, qty: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ تم إضافة المنتج إلى السلة!");
+    }
+  </script></body>
+</html>

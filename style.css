@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #1f1c2c, #928dab);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+}
+
+/* المحتوى الرئيسي */
+.content {
+  padding-bottom: 80px; /* هامش أكبر من ارتفاع الجدول */
+}
+
+/* الجدول الثابت */
+.footer-table {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+  border-collapse: collapse; /* يمنع الفراغات بين حدود الخلايا */
+}

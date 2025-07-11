@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>❤️ المفضلة</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #1f1c2c, #928dab);
+      color: #fff;
+      padding-bottom: 140px;
+    }
+
+    h2 {
+      text-align: center;
+      color: gold;
+      margin-top: 20px;
+    }
+
+    .fav-container {
+      max-width: 900px;
+      margin: 30px auto;
+    }
+
+    .fav-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .fav-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      margin-left: 15px;
+    }
+
+    .fav-item-info {
+      flex: 1;
+    }
+
+    .fav-item-info h4 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .fav-item-info p {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .fav-btns {
+      text-align: center;
+    }
+
+    .fav-btns button {
+      margin: 5px;
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .remove-btn {
+      background-color: #ff4d4d;
+      color: white;
+    }
+
+    .details-btn {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #f8f8f8;
+      border-top: 2px solid #ccc;
+    }
+
+    .footer td {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>❤️ قائمة المفضلة</h2>
+
+  <div class="fav-container" id="fav-items">
+    <!-- المنتجات ستظهر هنا -->
+  </div>
+
+  <div class="footer">
+    <table width="100%">
+      <tr align="center">
+        <td><a href="2simpl.html">🏠<br>الرئيسية</a></td>
+        <td><a href="offers.html">📢<br>العروض</a></td>
+        <td><a href="cart.html">🛒<br>السلة</a></td>
+        <td><a href="account.html">👤<br>الحساب</a></td>
+        <td><a href="favorites.html">❤️<br>المفضلة</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    const favContainer = document.getElementById("fav-items");
+    let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    function renderFavs() {
+      favContainer.innerHTML = "";
+      if (favs.length === 0) {
+        favContainer.innerHTML = '<p style="text-align:center">🗃 لا توجد عناصر في المفضلة بعد.</p>';
+        return;
+      }
+
+      favs.forEach((item, index) => {
+        const favHTML = `
+          <div class="fav-item">
+            <img src="${item.image}" alt="${item.name}">
+            <div class="fav-item-info">
+              <h4>${item.name}</h4>
+              <p>السعر: ${item.price} ريال</p>
+            </div>
+            <div class="fav-btns">
+              <button class="details-btn" onclick="viewDetails('${item.key}')">🔍 تفاصيل</button>
+              <button class="remove-btn" onclick="removeFav(${index})">🗑 حذف</button>
+            </div>
+          </div>
+        `;
+        favContainer.innerHTML += favHTML;
+      });
+    }
+
+    function removeFav(index) {
+      favs.splice(index, 1);
+      localStorage.setItem("favorites", JSON.stringify(favs));
+      renderFavs();
+    }
+
+    function viewDetails(key) {
+      window.location.href = `info.html?product=${key}`;
+    }
+
+    renderFavs();
+  </script>
+</body>
+</html>

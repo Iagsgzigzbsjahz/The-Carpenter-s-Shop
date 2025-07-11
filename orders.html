@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>📦 سجل الطلبات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: linear-gradient(to right, #1f1c2c, #928dab);
+      color: #fff;
+      padding: 30px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+      color: gold;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .order {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .order h3 {
+      color: #ffdd57;
+      margin-bottom: 10px;
+    }
+
+    .order ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .order li {
+      padding: 6px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #f8f8f8;
+      border-top: 2px solid #ccc;
+    }
+
+    .footer td {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📦 سجل الطلبات السابقة</h2>
+  <div id="orders-list"></div>
+
+  <div class="footer">
+    <table width="100%">
+      <tr align="center">
+        <td><a href="2simpl.html">🏠<br>الرئيسية</a></td>
+        <td><a href="offers.html">📢<br>العروض</a></td>
+        <td><a href="cart.html">🛒<br>السلة</a></td>
+        <td><a href="account.html">👤<br>الحساب</a></td>
+        <td><a href="menu.html">☰<br>القائمة</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const ordersList = document.getElementById("orders-list");
+
+    if (orders.length === 0) {
+      ordersList.innerHTML = "<p>لا توجد طلبات محفوظة بعد.</p>";
+    } else {
+      orders.reverse().forEach((order, index) => {
+        const orderDiv = document.createElement("div");
+        orderDiv.className = "order";
+        orderDiv.innerHTML = `<h3>🗓 الطلب رقم ${orders.length - index} - ${order.date}</h3>`;
+        const ul = document.createElement("ul");
+        order.items.forEach(item => {
+          ul.innerHTML += `<li>📦 ${item.name} × ${item.qty} — 💰 ${item.price * item.qty} ريال</li>`;
+        });
+        orderDiv.appendChild(ul);
+        ordersList.appendChild(orderDiv);
+      });
+    }
+  </script>
+
+</body>
+</html>

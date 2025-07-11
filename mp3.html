@@ -1,0 +1,119 @@
+<!DOCTYPE html><html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قسم مكبرات الصوت</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #1f1c2c, #928dab);
+      color: #fff;
+      padding-bottom: 120px;
+    }
+    .product {
+      background: rgba(255, 255, 255, 0.05);
+      margin: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 12px;
+    }
+    .product h3 {
+      text-align: center;
+      color: gold;
+    }
+    .product .actions {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .actions button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .add-btn {
+      background-color: #28a745;
+      color: #fff;
+    }
+    .info-btn {
+      background-color: #007bff;
+      color: #fff;
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #f8f8f8;
+      border-top: 2px solid #ccc;
+    }
+    .footer td {
+      text-align: center;
+      padding: 10px;
+    }
+    .footer a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="product">
+    <img src="mp3-1.jpg" alt="مكبر صوت VIP + مايك">
+    <h3>🔊 مكبر صوت VIP + مايك - 7000 ريال</h3>
+    <div class="actions">
+      <button class="add-btn" onclick="addToCart('مكبر صوت VIP + مايك', 7000, 'mp3-1.jpg')">🛒 أضف للسلة</button>
+      <a href="info.html?product=mp3_1"><button class="info-btn">🔍 عرض التفاصيل</button></a>
+    </div>
+  </div>  <div class="product">
+    <img src="mp3-2.jpg" alt="مكبر صوت فخامة">
+    <h3>🔊 مكبر صوت فخامة - 7000 ريال</h3>
+    <div class="actions">
+      <button class="add-btn" onclick="addToCart('مكبر صوت فخامة', 7000, 'mp3-2.jpg')">🛒 أضف للسلة</button>
+      <a href="info.html?product=mp3_2"><button class="info-btn">🔍 عرض التفاصيل</button></a>
+    </div>
+  </div>  <div class="product">
+    <img src="mp3-3.jpg" alt="مكبر صوت VIP">
+    <h3>🔊 مكبر صوت VIP - 3000 ريال</h3>
+    <div class="actions">
+      <button class="add-btn" onclick="addToCart('مكبر صوت VIP', 3000, 'mp3-3.jpg')">🛒 أضف للسلة</button>
+      <a href="info.html?product=mp3_3"><button class="info-btn">🔍 عرض التفاصيل</button></a>
+    </div>
+  </div>  <div class="product">
+    <img src="mp3-5.jpg" alt="مكبر صوت ملكي">
+    <h3>🔊 مكبر صوت ملكي - 3500 ريال</h3>
+    <div class="actions">
+      <button class="add-btn" onclick="addToCart('مكبر صوت ملكي', 3500, 'mp3-5.jpg')">🛒 أضف للسلة</button>
+      <a href="info.html?product=mp3_5"><button class="info-btn">🔍 عرض التفاصيل</button></a>
+    </div>
+  </div>  <div class="footer">
+    <table width="100%">
+      <tr align="center">
+        <td><a href="2simpl.html">🏠<br>الرئيسية</a></td>
+        <td><a href="offers.html">📢<br>العروض</a></td>
+        <td><a href="cart.html">🛒<br>السلة</a></td>
+        <td><a href="account.html">👤<br>الحساب</a></td>
+        <td><a href="menu.html">☰<br>القائمة</a></td>
+      </tr>
+    </table>
+  </div>  <script>
+    function addToCart(name, price, image) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let index = cart.findIndex(item => item.name === name);
+      if (index !== -1) {
+        cart[index].qty += 1;
+      } else {
+        cart.push({ name, price, image, qty: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ تم إضافة المنتج إلى السلة!");
+    }
+  </script></body>
+</html>
